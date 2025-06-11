@@ -1,39 +1,32 @@
-import { AppProviders } from '@/components/app-providers.tsx'
-import { AppLayout } from '@/components/app-layout.tsx'
-import { RouteObject, useRoutes } from 'react-router'
-import { lazy } from 'react'
+import { useMemo } from 'react';
+import { ConnectionProvider, WalletProvider, } from '@solana/wallet-adapter-react';
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+import { PhantomWalletAdapter } from '@solana/wallet-adapter-wallets';
+import { WalletModalProvider, WalletMultiButton, } from '@solana/wallet-adapter-react-ui';
+import { clusterApiUrl } from '@solana/web3.js';
+import OfferList from './components/Offer-list';
+import './index.css';
+import '@solana/wallet-adapter-react-ui/styles.css';
 
-const links = [
-  //
-  { label: 'Home', path: '/' },
-  { label: 'Account', path: '/account' },
-  { label: 'Counter Program', path: '/counter' },
-]
 
-const LazyAccountIndex = lazy(() => import('@/components/account/account-index-feature'))
-const LazyAccountDetail = lazy(() => import('@/components/account/account-detail-feature'))
-const LazyCounter = lazy(() => import('@/components/counter/counter-feature'))
-const LazyDashboard = lazy(() => import('@/components/dashboard/dashboard-feature'))
 
-const routes: RouteObject[] = [
-  { index: true, element: <LazyDashboard /> },
-  {
-    path: 'account',
-    children: [
-      { index: true, element: <LazyAccountIndex /> },
-      { path: ':address', element: <LazyAccountDetail /> },
-    ],
-  },
-  { path: 'counter', element: <LazyCounter /> },
-]
+function App() {
+  const network = WalletAdapterNetwork.Devnet;
+  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
 
-console.log({ links, routes })
+  const wallets = useMemo(
+    () => [new PhantomWalletAdapter()], [network]);
 
-export function App() {
-  const router = useRoutes(routes)
   return (
-    <AppProviders>
-      <AppLayout links={links}>{router}</AppLayout>
-    </AppProviders>
-  )
+    <ConnectionProvider endpoint={endpoint}>
+      <WalletProvider wallets={wallets} autoConnect>
+        <WalletModalProvider>
+          <WalletMultiButton />
+          <OfferList />
+        </WalletModalProvider>
+      </WalletProvider>
+    </ConnectionProvider>
+  );
 }
+
+export default App;

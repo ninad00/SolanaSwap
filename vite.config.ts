@@ -16,4 +16,10 @@ export default defineConfig({
       root: resolve(__dirname),
     }),
   ],
+
+  server: {
+    watch: {
+      usePolling: true,
+    },
+  }
 })
