@@ -1,54 +1,74 @@
-# React + TypeScript + Vite
+# 🪙 SolanaSwap
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SolanaSwap is a decentralized token swapping platform built on the [Solana blockchain](https://solana.com). It enables peer-to-peer swaps between two SPL tokens using custom smart contracts developed with [Anchor](https://book.anchor-lang.com/).
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- Swap any two SPL tokens directly
+- Permissionless: anyone can create or take offers
+- Program Derived Address (PDA) based escrow
+- Fully on-chain offer lifecycle (create, list, cancel, accept)
+- React-based frontend with wallet integration
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 📦 Tech Stack
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+| Layer | Tech |
+|------|------|
+| Smart Contract | [Anchor](https://github.com/coral-xyz/anchor) |
+| Frontend | React + TypeScript |
+| Wallet | `@solana/wallet-adapter` |
+| Token Handling | `@solana/spl-token` |
+| Network | Devnet / Mainnet |
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## ⚙️ How it Works
+
+### 1. **Create Offer**
+- A user (maker) deposits Token A into a PDA-controlled escrow.
+- Metadata includes: Token A offered, Token B wanted, amounts, bump.
+
+### 2. **Take Offer**
+- A taker sends Token B to the maker.
+- Program releases Token A from escrow to the taker.
+
+### 3. **Cancel Offer**
+- Maker can cancel an active offer, reclaiming their Token A.
+
+---
+
+## 📁 Project Structure
+
+SolanaSwap/
+├── anchor/ # Anchor program (smart contract)
+│ ├── programs/
+│ ├── src/
+│ └── tests/
+├── app/ # React frontend
+│ ├── components/
+│ ├── pages/
+│ └── hooks/
+└── README.md
+
+
+---
+
+## 🚀 Local Development
+
+### Prerequisites
+- Node.js
+- Solana CLI (`solana`)
+- Anchor CLI (`anchor`)
+- Yarn or npm
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/ninad00/SolanaSwap.git
+cd SolanaSwap
+
+
