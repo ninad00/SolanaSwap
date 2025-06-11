@@ -4,6 +4,9 @@ SolanaSwap is a decentralized token swapping platform built on the [Solana block
 
 ---
 
+![WhatsApp Image 2025-06-12 at 01 06 20_ac10034d](https://github.com/user-attachments/assets/24700f1d-3716-457a-9149-b55810ee79f5)
+
+
 ## ✨ Features
 
 - Swap any two SPL tokens directly
@@ -43,15 +46,16 @@ SolanaSwap is a decentralized token swapping platform built on the [Solana block
 
 ## 📁 Project Structure
 
+```text
 SolanaSwap/
-├── anchor/ # Anchor program (smart contract)
-│ ├── programs/
-│ ├── src/
-│ └── tests/
-├── app/ # React frontend
-│ ├── components/
-│ ├── pages/
-│ └── hooks/
+├── anchor/               # Anchor program (smart contract)
+│   ├── programs/
+│   ├── src/
+│   └── tests/
+├── app/                  # React frontend
+│   ├── components/
+│   ├── pages/
+│   └── hooks/
 └── README.md
 
 
